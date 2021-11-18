@@ -2,9 +2,9 @@
 title: "Final Report Exercise"
 author: "YOUR NAME"
 output:
-  word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -21,7 +21,8 @@ dat <- drop_na(read.csv(url("https://www.dropbox.com/s/uhfstf6g36ghxwp/cces_samp
 Create a vector of five numbers of your choice between 0 and 10, save that vector to an object, and use the sum() function to calculate the sum of the numbers.
 
 ```{r,problem1}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+x <- c(2,4,6,8,10)
+sum(x)
 ```
 
 # Problem 2
@@ -31,7 +32,10 @@ Create a data frame that includes two columns. One column must have the numbers 
 Put your code and solution here:
 
 ```{r,problem2}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+my_dat <- data.frame(
+  alpha = c(1:5),
+  beta = c(6:10))
+my_dat
 ```
 
 # Problem 3 
@@ -41,7 +45,7 @@ Using the data frame created in Problem 2, use the summary() command a create a 
 Put your code and solution here:
 
 ```{r,problem3}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+summary(my_dat$beta)
 ```
 
 # Problem 4
@@ -53,7 +57,7 @@ Hint: consult the codebook to identify the correct column name for the family in
 Put your code and solution here:
 
 ```{r,problem4}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+boxplot(dat$faminc_new , main = "Louis Lau" , xlab = "Family Income")
 ```
 
 # Problem 5
@@ -65,7 +69,8 @@ Use the str() function to provide information about the resulting dataset.
 Put your code and solution here:
  
 ```{r problem5,include=TRUE,echo=TRUE}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+dat_m <- filter(dat, gender == 1, region == 1 | region == 2, marstat == 1, newsint == 1)
+str(dat_m)
 ```
 
 # Problem 6
@@ -75,7 +80,7 @@ Filter the data the same as in Problem 5. Use a R function to create a frequency
 Put your code and solution here:
 
 ```{r problem6,include=TRUE,echo=TRUE}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+table(dat_m$investor)
 ``` 
 
 # Problem 7
@@ -87,7 +92,11 @@ Display the first twenty elements of the new column you create.
 Put your code and solution here:
 
 ```{r problem7,include=TRUE,echo=TRUE}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+sup_325a <- recode(dat$CC18_325a, '1' = 1, '2' = 0)
+sup_325d <- recode(dat$CC18_325d, '1' = 1 , '2' = 0)
+tax_respond <- sup_325a + sup_325d
+dat <- mutate(dat,tax_respond)
+head(dat$tax_respond, 20)
 ```
 
 # Problem 8
@@ -97,7 +106,7 @@ Use a frequency table command to show how many 0s, 1s, and 2s are in the column 
 Put your code and solution here:
 
 ```{r problem8,include=TRUE,echo=TRUE}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+table(dat$tax_respond)
 ```
 
 # Problem 9
@@ -107,7 +116,8 @@ Again using all rows in the original dataset, use summarise and group_by to calc
 Put your code and solution here:
  
 ```{r problem9}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+dat %>% group_by(region) %>%
+  summarise(Trump_approval_mean = mean(CC18_308a))
 ```
  
 # Problem 10
@@ -117,7 +127,12 @@ Again start with all rows in the original dataset, use summarise() to create a s
 Put your code and solution here:
 
 ```{r problem10}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+dat_2 <- dat %>% filter(between(faminc_new,5,10), 
+                        investor == 2)
+dat_2 %>%  summarise(Mean_of_religion = mean(pew_religimp),
+            Median_of_religion = median(pew_religimp),
+            Sd_of_religion = sd(pew_religimp))
+  
 ```
 
 # Problem 11
@@ -127,7 +142,7 @@ Use kable() and the the summarise() function to create a table with one row and 
 Put your code and solution here:
 
 ```{r problem11}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+kable(dat %>% summarise(Mean_faminc = mean(faminc_new), Median_faminc = median(faminc_new), sd_faminc = sd(faminc_new)))
 ```
 
 # Problem 12
@@ -139,5 +154,5 @@ Note: you can ignore the "stat_bin()" message that R generates when you draw thi
 Put your code and solution here:
 
 ```{r problem12,message=FALSE}
-#Put your code here, then delete this commented line before submission. Don't modify the setup code for this chunk - you want your code and output to both display.
+qplot(dat$pid7, xlab = "Seven Point Party ID" , ylab = "Count")
 ```
