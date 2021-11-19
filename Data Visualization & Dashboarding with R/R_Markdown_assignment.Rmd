@@ -1,6 +1,6 @@
 ---
 title: "Final Report Exercise"
-author: "YOUR NAME"
+author: "LAU LOUIS KIN PONG"
 output:
   html_document: default
   pdf_document: default
