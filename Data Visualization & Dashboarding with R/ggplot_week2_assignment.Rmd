@@ -34,7 +34,17 @@ Hints:
 
 
 ```{r exercise1,echo=FALSE}
+cces <- cces %>% mutate(ideo5 = recode(ideo5,
+                                      "5" = "Very Conservative",
+                                      "4" = "Conservative",
+                                      "3" = "Moderate",
+                                      "2" = "Liberal",
+                                      "1" = "Very Liberal"))
 
+cces %>% ggplot(aes(x=ideo5, fill=ideo5))+
+  geom_bar()+
+  guides(fill=FALSE)+
+  labs(title="Respondent Ideology", x="Ideology", y="Count")
 
 ```
 
@@ -53,7 +63,15 @@ Hints:
 * Make sure the axis labels and figure title are correct.
 
 ```{r exercise2,echo=FALSE}
-####PUT YOUR CODE HERE
+cces <- cces %>% mutate(pew_religimp = recode(pew_religimp,
+                                      "4" = "Not imp.",
+                                      "3" = "Not too imp.",
+                                      "2" = "Somewhat imp.",
+                                      "1" = "Very imp."))
+
+cces %>% ggplot(aes(x=pew_religimp, fill=factor(ideo5)))+
+  geom_bar()+
+  labs(title="Importance of Religion by Ideology", x="Importance of Religion", y="Count", fill="Ideology")
 ```
 
 ## Exercise 3
