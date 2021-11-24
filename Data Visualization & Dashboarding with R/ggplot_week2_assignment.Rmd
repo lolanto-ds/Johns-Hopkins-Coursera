@@ -43,7 +43,7 @@ cces <- cces %>% mutate(ideo5 = recode(ideo5,
 
 cces %>% ggplot(aes(x=ideo5, fill=ideo5))+
   geom_bar()+
-  guides(fill=FALSE)+
+  guides(fill="none")+
   labs(title="Respondent Ideology", x="Ideology", y="Count")
 
 ```
