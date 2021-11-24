@@ -90,5 +90,12 @@ The figure should look approximately like this (your vaules will be slightly dif
 
 
 ```{r exercise3,echo=FALSE}
-####PUT YOUR CODE HERE
+dat <-expand_grid(Semester=1:6, Student=c("Amanda","Betty","Carol"))
+dat$Grade <- round(runif(18,80,100))
+
+ggplot(dat, aes(x=Semester, y=Grade,color=Student))+
+  geom_line()+
+  labs(title = "Student Grades by Semester")+
+  guides(color="none")+
+  facet_grid(~Student)
 ```
