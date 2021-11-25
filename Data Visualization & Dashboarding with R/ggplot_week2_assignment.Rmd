@@ -43,7 +43,7 @@ cces <- cces %>% mutate(ideo5 = recode(ideo5,
 
 cces %>% ggplot(aes(x=ideo5, fill=ideo5))+
   geom_bar()+
-  guides(fill="none")+
+  guides(fill=FALSE)+
   labs(title="Respondent Ideology", x="Ideology", y="Count")
 
 ```
@@ -96,6 +96,6 @@ dat$Grade <- round(runif(18,80,100))
 ggplot(dat, aes(x=Semester, y=Grade,color=Student))+
   geom_line()+
   labs(title = "Student Grades by Semester")+
-  guides(color="none")+
+  guides(color=FALSE)+
   facet_grid(~Student)
 ```
